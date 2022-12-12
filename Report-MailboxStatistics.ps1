@@ -43,27 +43,27 @@ foreach ($MailboxStatistic in $MailboxStatistics) {
    </style>
   </head>
  <body>
-  <h2>Mailbox Übersicht</h2>'
+  <h2>Mailboxstatistik: '+ $Displayname +'</h2>'
  
  $MailboxSize = $MailboxStatistic.MailboxSize
  $MailBody += '<div><p>Ihr Postfach ist '
  $MailBody += $MailboxSize
- $MailBody += ' MB groß, bitte löschen Sie nicht mehr benötigte Daten aus Ihrem Postfach.</p></div>'
+ $MailBody += ' MB gro&szlig;, bitte l&ouml;schen Sie nicht mehr ben&ouml;tigte Daten aus Ihrem Postfach.</p></div>'
  
  $TopFoldersBySize = $MailboxStatistic.TopFoldersBySize | select @{label="Ordnerpfad"; expression={$_.Folderpath}}, @{label="Größe"; expression={$str = $_.Foldersize; [string]$str + " MB"}} | ConvertTo-Html -Fragment
- $MailBody += '<div><p>Dies ist eine Übersicht ihrer '
+ $MailBody += '<div><p>Dies ist eine &Uuml;bersicht ihrer '
  $MailBody += $CountTopFolder
- $MailBody += ' größten Ordner in ihrem Postfach:</p></div>'
+ $MailBody += ' gr&ouml;&szlig;ten Ordner in ihrem Postfach:</p></div>'
  $MailBody += $TopFoldersBySize
  
  $TopFoldersByItems = $MailboxStatistic.TopFoldersByItems | select @{label="Ordnerpfad"; expression={$_.Folderpath}}, @{label="Anzahl Elemente"; expression={$_.ItemsInFolder}} | ConvertTo-Html -Fragment
- $MailBody += '<div><p>Ordner mit vielen Elementen beeinträchtigen die Outlook Geschwindigkeit, löschen Sie nicht mehr benötigte Elemente um Outlook nicht zu verlangsamen. Dies sind Ihre '
+ $MailBody += '<div><p>Ordner mit vielen Elementen beeintr&auml;chtigen die Outlook Geschwindigkeit, l&ouml;schen Sie nicht mehr ben&ouml;tigte Elemente um Outlook nicht zu verlangsamen. Dies sind Ihre '
  $MailBody += $CountTopFolder
  $MailBody +=' Ordner mit den meisten Elementen:</p></div>'
  $MailBody += $TopFoldersByItems
  
  $MailBody += '<div><p>Hier finden Sie weitere Informationen: https://www.frankysweb.de</p></div>'
- $MailBody += '<div><p>Vielen Dank für Ihre Mithilfe</p></div>'
+ $MailBody += '<div><p>Vielen Dank f&uuml;r Ihre Mithilfe</p></div>'
  
  $MailBody += '</body>
   </html>'
