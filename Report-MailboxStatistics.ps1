@@ -1,4 +1,5 @@
-$Group = "Domain Users"
+$Group = Read-Host -Prompt "Gruppe"
+$UName = Read-Host -Prompt "User Name"
 $CountTopFolder = 10
 $ReportMailboxSizeInMB = 5000
 
@@ -7,7 +8,8 @@ $From = "postfachbericht@domain.tld"
 $Subject = "Postfach Übersicht"
 
 [System.Collections.ArrayList]$MailboxStatistics = @()
-$GroupMembers = Get-ADGroup $Group | Get-ADGroupMember -Recursive | Get-ADUser -Properties msExchMailboxGuid | where {$_.msExchMailboxGuid -ne $Null}
+if($Group -ne ""){$GroupMembers = Get-ADGroup $Group | Get-ADGroupMember -Recursive | Get-ADUser -Properties msExchMailboxGuid | where {$_.msExchMailboxGuid -ne $Null}}
+if($UName -ne ""){$GroupMembers = Get-ADUser -Identity $UName | Get-ADUser -Properties msExchMailboxGuid | where {$_.msExchMailboxGuid -ne $Null}}
 foreach ($GroupMember in $GroupMembers) {
  $Mailbox = get-mailbox $GroupMember.SamAccountName
  $EMail = $Mailbox.PrimarySmtpAddress.Address
